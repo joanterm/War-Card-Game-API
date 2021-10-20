@@ -1,10 +1,12 @@
 const newDeckBtn = document.querySelector(".new-deck-btn")
-const drawCardsBtn = document.querySelector(".draw-cards")
+const drawCardsBtn = document.querySelector(".draw-cards-btn")
 const url = "https://apis.scrimba.com/deckofcards/api/deck/new/shuffle/"
 // const drawCardsUrl = `https://apis.scrimba.com/deckofcards/api/deck/${randomCardId}/draw/?count=2`
 const imageArea = document.querySelector(".image-area")
 
 let randomCardId = "";
+
+
 
 const getNewDeck = () => {
     fetch(url, {method: "GET"})
@@ -17,6 +19,9 @@ const getNewDeck = () => {
         console.log(randomCardId)
     })
 }
+
+
+
 
 // const drawCards = () => {
 //     fetch(`https://apis.scrimba.com/deckofcards/api/deck/new/draw/?count=2`)
@@ -51,13 +56,30 @@ const drawCards = () => {
 
 const displayCards = (card) => {
     const result = card.cards
+    const computerCard = result[0].value  
+    const myCard = result[1].value
+    //ACCESSES THE CARD IMGS AND PLACES THEM INTO DIV
     result.filter((e) => {
         console.log(e.image)
         const img = document.createElement('img')
+        img.classList.add("card-image")
         img.src = e.image
-        imageArea.appendChild(img)
+        imageArea.appendChild(img);
+
+        console.log(e.value)
+        // console.log(computerCard)            
     })
+    if (computerCard > myCard) {
+        console.log("computer wins")
+    }
+    else if (computerCard < myCard) {
+        console.log("i win")
+    }
+    else if (computerCard === myCard) {
+        console.log("it's a tie");    
+    }
 }
+
 
 
 

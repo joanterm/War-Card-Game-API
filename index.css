@@ -1,0 +1,70 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: rgb(67, 201, 145);
+}
+
+.main-section {
+    border: 3px solid red;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.image-area {
+    border: 3px solid yellow;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 600px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.card-image {
+    border: 3px solid pink;
+    background-size: contain;
+    width: 40%;
+    margin: 10px;
+    /* max-height: 90%; */
+    /* overflow-y:auto; */
+}
+
+.new-deck-btn {
+    padding: 2em 4em;
+    align-self: flex-start;
+}
+
+.draw-cards-btn {
+    padding: 2em 4em;
+    /* position: fixed;
+    bottom: 0; */
+}
+
+@media screen and (max-width: 375px) {
+    body {
+      background-color: rgb(177, 126, 177);
+    }
+    .image-area {
+        /* max-height: 400px; */
+        height: 400px;
+        max-width: 500px;
+        width: 100%;
+    }
+    .card-image {
+        width: 40%;
+        /* max-height: 90%; */
+        overflow-y:auto;
+    }
+    /* .main-section {
+        height: auto;
+    } */
+  }
+
