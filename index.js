@@ -1,11 +1,12 @@
 const newDeckBtn = document.querySelector(".new-deck-btn")
 const drawCardsBtn = document.querySelector(".draw-cards-btn")
 const url = "https://apis.scrimba.com/deckofcards/api/deck/new/shuffle/"
-// const drawCardsUrl = `https://apis.scrimba.com/deckofcards/api/deck/${randomCardId}/draw/?count=2`
 const imageArea = document.querySelector(".image-area")
 const textSection = document.querySelector(".text-section")
 
-let randomCardId;
+
+let randomCardId = "";
+
 
 const getNewDeck = () => {
     fetch(url, {method: "GET"})
@@ -14,10 +15,12 @@ const getNewDeck = () => {
     })
     .then((data) => {
         console.log(data)
-        const randomCardId = data.deck_id
+        //CAN'T PUT LET/CONST HERE; WE'LL BE ASSIGNING RANDOMCARDID TO DRAW CARDS API (CAN'T DRAW UNLESS NEW DECK IS CLICKED)
+        randomCardId = data.deck_id
         console.log(randomCardId)
     })
 }
+newDeckBtn.addEventListener("click", getNewDeck)
 
 
 
@@ -42,8 +45,9 @@ const getNewDeck = () => {
 // }
 
 
+
 const drawCards = () => {
-    fetch(`https://apis.scrimba.com/deckofcards/api/deck/new/draw/?count=2`)
+    fetch(`https://apis.scrimba.com/deckofcards/api/deck/${randomCardId}/draw/?count=2`)
     .then((responseDrawCards) => {
         return responseDrawCards.json()
     })
@@ -58,14 +62,19 @@ const displayCards = (card) => {
     const computerCard = result[0].value  
     const myCard = result[1].value
     console.log(card.remaining)
-    //ACCESSES THE CARD IMGS AND PLACES THEM INTO DIV
+    console.log(result[0].image)
+    imageArea.innerHTML = ""; //RESETS THE LOGIC
+
+    //LOOPS, ACCESSES THE CARD IMGS FROM API AND PLACES THEM INTO DIV
     result.filter((e) => {
         console.log(e.image)
         const img = document.createElement('img')
         img.classList.add("card-image")
         img.src = e.image
-        imageArea.appendChild(img);
-        console.log(e.value)           
+        imageArea.appendChild(img);      
+        // console.log(e.value)    
+
+        // imageArea.innerHTML = result[0].value 
     })
     //CONTAINS LOGIC FOR PLAYING GAME
     const playGame = () => {
@@ -81,7 +90,7 @@ const displayCards = (card) => {
         }
     }
     playGame()
-    // console.log(playGame())
+    console.log(playGame())
     textSection.innerText = (`
         Remaining: ${card.remaining}
         ${playGame()}
@@ -90,8 +99,6 @@ const displayCards = (card) => {
 
 
 
-
-newDeckBtn.addEventListener("click", getNewDeck)
 drawCardsBtn.addEventListener("click", drawCards)
 
 
