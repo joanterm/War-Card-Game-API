@@ -48,6 +48,11 @@ body {
     bottom: 0; */
 }
 
+.disable-btn-style {
+    cursor: not-allowed;
+    background-color: red;
+}
+
 .text-section {
     text-align: center;
 }

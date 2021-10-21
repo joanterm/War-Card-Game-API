@@ -1,12 +1,12 @@
 const newDeckBtn = document.querySelector(".new-deck-btn")
 const drawCardsBtn = document.querySelector(".draw-cards-btn")
-const url = "https://apis.scrimba.com/deckofcards/api/deck/new/shuffle/"
 const imageArea = document.querySelector(".image-area")
 const textSection = document.querySelector(".text-section")
+const url = "https://apis.scrimba.com/deckofcards/api/deck/new/shuffle/"
+let computerScore = 0;
 
 
-let randomCardId = "";
-
+let deckId = "";
 
 const getNewDeck = () => {
     fetch(url, {method: "GET"})
@@ -15,14 +15,13 @@ const getNewDeck = () => {
     })
     .then((data) => {
         console.log(data)
-        //CAN'T PUT LET/CONST HERE; WE'LL BE ASSIGNING RANDOMCARDID TO DRAW CARDS API (CAN'T DRAW UNLESS NEW DECK IS CLICKED)
-        randomCardId = data.deck_id
-        console.log(randomCardId)
+        //CAN'T PUT LET/CONST HERE B/C IT'S ALREADY ASSIGNED TO ""
+        deckId = data.deck_id
+        console.log(deckId)
+        console.log(data.remaining)
+        textSection.innerHTML = `You start with: ${data.remaining} cards` 
     })
 }
-newDeckBtn.addEventListener("click", getNewDeck)
-
-
 
 
 // const drawCards = () => {
@@ -45,9 +44,9 @@ newDeckBtn.addEventListener("click", getNewDeck)
 // }
 
 
-
 const drawCards = () => {
-    fetch(`https://apis.scrimba.com/deckofcards/api/deck/${randomCardId}/draw/?count=2`)
+    //ALLOWS TO ACCESS OUR DECK ID
+    fetch(`https://apis.scrimba.com/deckofcards/api/deck/${deckId}/draw/?count=2`)
     .then((responseDrawCards) => {
         return responseDrawCards.json()
     })
@@ -57,30 +56,31 @@ const drawCards = () => {
     })
 }
 
+
 const displayCards = (card) => {
     const result = card.cards
     const computerCard = result[0].value  
     const myCard = result[1].value
-    console.log(card.remaining)
-    console.log(result[0].image)
-    imageArea.innerHTML = ""; //RESETS THE LOGIC
+    const cardsRemaining = card.remaining -- //DECREASING FROM THE ORIGINAL NUMBER OF 52
+    console.log(cardsRemaining)
+    imageArea.innerHTML = ""; //RESETS THE LOGIC AFTER LOOP RUNS FOR THE 1ST TIME
 
     //LOOPS, ACCESSES THE CARD IMGS FROM API AND PLACES THEM INTO DIV
     result.filter((e) => {
         console.log(e.image)
         const img = document.createElement('img')
-        img.classList.add("card-image")
+        img.classList.add("card-image") //FOR CSS STYLING PURPOSES ONLY
         img.src = e.image
         imageArea.appendChild(img);      
-        // console.log(e.value)    
-
-        // imageArea.innerHTML = result[0].value 
     })
     //CONTAINS LOGIC FOR PLAYING GAME
     const playGame = () => {
         if (computerCard > myCard) {
-            return ("computer wins")
-    
+            console.log(computerScore ++)
+            return (computerScore/2)
+            // return computerScore
+            // console.log(computerScore)
+            // return ('computer wins')     
         }
         else if (computerCard < myCard) {
             return ("i win")
@@ -89,16 +89,22 @@ const displayCards = (card) => {
             return ("it's a tie");    
         }
     }
+    //CONTAINS LOGIC TO DISABLE BUTTON ONCE THERE ARE NO MORE CARDS LEFT
+    const disableButton = () => {
+        if (cardsRemaining === 0) {
+            drawCardsBtn.disabled = true;
+            drawCardsBtn.classList.add("disable-btn-style")
+        }
+    }
     playGame()
-    console.log(playGame())
     textSection.innerText = (`
-        Remaining: ${card.remaining}
+        Remaining: ${cardsRemaining}
         ${playGame()}
-    `)   
+    `) 
+    disableButton() 
 }
 
-
-
+newDeckBtn.addEventListener("click", getNewDeck)
 drawCardsBtn.addEventListener("click", drawCards)
 
 
