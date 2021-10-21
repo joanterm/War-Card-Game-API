@@ -3,10 +3,9 @@ const drawCardsBtn = document.querySelector(".draw-cards-btn")
 const url = "https://apis.scrimba.com/deckofcards/api/deck/new/shuffle/"
 // const drawCardsUrl = `https://apis.scrimba.com/deckofcards/api/deck/${randomCardId}/draw/?count=2`
 const imageArea = document.querySelector(".image-area")
+const textSection = document.querySelector(".text-section")
 
-let randomCardId = "";
-
-
+let randomCardId;
 
 const getNewDeck = () => {
     fetch(url, {method: "GET"})
@@ -58,6 +57,7 @@ const displayCards = (card) => {
     const result = card.cards
     const computerCard = result[0].value  
     const myCard = result[1].value
+    console.log(card.remaining)
     //ACCESSES THE CARD IMGS AND PLACES THEM INTO DIV
     result.filter((e) => {
         console.log(e.image)
@@ -65,19 +65,27 @@ const displayCards = (card) => {
         img.classList.add("card-image")
         img.src = e.image
         imageArea.appendChild(img);
-
-        console.log(e.value)
-        // console.log(computerCard)            
+        console.log(e.value)           
     })
-    if (computerCard > myCard) {
-        console.log("computer wins")
+    //CONTAINS LOGIC FOR PLAYING GAME
+    const playGame = () => {
+        if (computerCard > myCard) {
+            return ("computer wins")
+    
+        }
+        else if (computerCard < myCard) {
+            return ("i win")
+        }
+        else if (computerCard === myCard) {
+            return ("it's a tie");    
+        }
     }
-    else if (computerCard < myCard) {
-        console.log("i win")
-    }
-    else if (computerCard === myCard) {
-        console.log("it's a tie");    
-    }
+    playGame()
+    // console.log(playGame())
+    textSection.innerText = (`
+        Remaining: ${card.remaining}
+        ${playGame()}
+    `)   
 }
 
 

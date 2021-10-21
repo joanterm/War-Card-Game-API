@@ -34,7 +34,7 @@ body {
     width: 40%;
     margin: 10px;
     /* max-height: 90%; */
-    /* overflow-y:auto; */
+    overflow-y:auto;
 }
 
 .new-deck-btn {
@@ -46,6 +46,10 @@ body {
     padding: 2em 4em;
     /* position: fixed;
     bottom: 0; */
+}
+
+.text-section {
+    text-align: center;
 }
 
 @media screen and (max-width: 375px) {
