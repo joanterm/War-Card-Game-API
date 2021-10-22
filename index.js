@@ -3,7 +3,11 @@ const drawCardsBtn = document.querySelector(".draw-cards-btn")
 const imageArea = document.querySelector(".image-area")
 const textSection = document.querySelector(".text-section")
 const url = "https://apis.scrimba.com/deckofcards/api/deck/new/shuffle/"
+const computerScoreArea = document.querySelector(".computer-score-area")
+const myScoreArea = document.querySelector(".my-score-area")
+const winnerTextArea = document.querySelector(".winner-text-area")
 let computerScore = 0;
+let myScore = 0;
 
 
 let deckId = "";
@@ -76,17 +80,17 @@ const displayCards = (card) => {
     //CONTAINS LOGIC FOR PLAYING GAME
     const playGame = () => {
         if (computerCard > myCard) {
-            console.log(computerScore ++)
-            return (computerScore/2)
-            // return computerScore
-            // console.log(computerScore)
-            // return ('computer wins')     
+            computerScore++
+            computerScoreArea.innerHTML = `Computer score: ${computerScore}` 
+            winnerTextArea.innerHTML = "Computer wins!"
         }
         else if (computerCard < myCard) {
-            return ("i win")
+            myScore++
+            myScoreArea.innerHTML = `My Score: ${myScore}`
+            winnerTextArea.innerHTML = "You win!"
         }
         else if (computerCard === myCard) {
-            return ("it's a tie");    
+            winnerTextArea.innerHTML = "It's a tie!"   
         }
     }
     //CONTAINS LOGIC TO DISABLE BUTTON ONCE THERE ARE NO MORE CARDS LEFT
@@ -99,7 +103,6 @@ const displayCards = (card) => {
     playGame()
     textSection.innerText = (`
         Remaining: ${cardsRemaining}
-        ${playGame()}
     `) 
     disableButton() 
 }
