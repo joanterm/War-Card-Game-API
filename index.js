@@ -100,11 +100,24 @@ const displayCards = (card) => {
             drawCardsBtn.classList.add("disable-btn-style")
         }
     }
+    const annouceWinner = () => {
+        if (cardsRemaining === 0 && computerScore > myScore) {
+            winnerTextArea.innerHTML = "COMPUTER WON"
+        }
+        else if (cardsRemaining === 0 && computerScore < myScore) {
+            winnerTextArea.innerHTML = "YOU WON!"
+        }
+        else if (cardsRemaining === 0 && computerScore === myScore) {
+            winnerTextArea.innerHTML = "IT'S A TIE BETWEEN YOU TWO"
+        }
+    }
+
     playGame()
     textSection.innerText = (`
         Remaining: ${cardsRemaining}
     `) 
     disableButton() 
+    annouceWinner()
 }
 
 newDeckBtn.addEventListener("click", getNewDeck)
