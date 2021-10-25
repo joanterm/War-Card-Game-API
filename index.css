@@ -2,14 +2,15 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: 'Caveat Brush', cursive;
+    color: #191919;
 }
 
 body {
-    background-color: rgb(67, 201, 145);
+    background-color: #cbb8ac
 }
 
 .main-section {
-    border: 3px solid red;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -18,61 +19,67 @@ body {
 }
 
 .image-area {
-    border: 3px solid yellow;
+    background-color: #86B049;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 600px;
+    height: 600px;   
     max-width: 500px;
     width: 100%;
 }
 
 .card-image {
-    border: 3px solid pink;
     background-size: contain;
-    width: 40%;
+    width: 30%;
     margin: 10px;
-    /* max-height: 90%; */
     overflow-y:auto;
 }
 
+.new-deck-btn,
+.draw-cards-btn {
+    padding: 1em 2em;
+    font-size: 1.125rem;
+    background-color: #476930;
+    color: white;
+    border: none;
+}
+
+.new-deck-btn:hover,
+.draw-cards-btn:hover {
+    background-color: #86B049;
+}
+
 .new-deck-btn {
-    padding: 2em 4em;
     align-self: flex-start;
 }
 
 .draw-cards-btn {
-    padding: 2em 4em;
-    /* position: fixed;
-    bottom: 0; */
+    margin-top: 0.5em;
 }
 
-.disable-btn-style {
+.disable-btn-style,
+.disable-btn-style:hover {
     cursor: not-allowed;
     background-color: red;
 }
 
+.winner-text-area,
 .text-section {
     text-align: center;
 }
 
+span {
+    color: red;
+}
+
 @media screen and (max-width: 375px) {
-    body {
-      background-color: rgb(177, 126, 177);
-    }
     .image-area {
-        /* max-height: 400px; */
         height: 400px;
-        max-width: 500px;
-        width: 100%;
+        max-height: 400px;
     }
     .card-image {
-        width: 40%;
-        /* max-height: 90%; */
-        overflow-y:auto;
+        width: 30%;
     }
-    /* .main-section {
-        height: auto;
-    } */
   }
